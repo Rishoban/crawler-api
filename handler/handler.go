@@ -9,4 +9,8 @@ type CrawlerService struct {
 	DbConnection *gorm.DB `json:"dbConnection"`
 }
 
-func (v *CrawlerService) InitRouter(routerEngine *gin.Engine) {}
+func (v *CrawlerService) InitRouter(routerEngine *gin.Engine) {
+	maintenanceGeneral := routerEngine.Group("/")
+	maintenanceGeneral.POST("/login", v.Login)
+	maintenanceGeneral.POST("/refresh-token", v.RefreshToken)
+}

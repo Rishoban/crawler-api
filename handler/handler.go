@@ -47,7 +47,14 @@ type CrawlerService struct {
 
 func (v *CrawlerService) InitRouter(routerEngine *gin.Engine) {
 	maintenanceGeneral := routerEngine.Group("/")
-	// maintenanceGeneral.Use(TokenAuthMiddleware()) // Apply middleware to all routes in this group
 	maintenanceGeneral.POST("/login", v.Login)
 	maintenanceGeneral.POST("/refresh-token", v.RefreshToken)
+
+	// Protected endpoints with token middleware
+	maintenanceGeneral.POST("/crawler/records", TokenAuthMiddleware(), v.CreateNewRecord)
+	maintenanceGeneral.POST("/crawler/delete", TokenAuthMiddleware(), v.ArchiveCrawlers)
+	maintenanceGeneral.POST("/crawler/bulk_analysis", TokenAuthMiddleware(), v.ReRunAnalysis)
+	maintenanceGeneral.GET("/crawler/all_data", TokenAuthMiddleware(), v.GetAllUrls)
+	maintenanceGeneral.GET("/crawler/record/:id", TokenAuthMiddleware(), v.GetRecordByID)
+	maintenanceGeneral.POST("/crawler/stop_analysis", TokenAuthMiddleware(), v.StopAnalysis)
 }

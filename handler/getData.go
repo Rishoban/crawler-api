@@ -23,6 +23,10 @@ func (v *CrawlerService) GetAllUrls(ctx *gin.Context) {
 	}
 
 	var urls = make([]map[string]interface{}, 0)
+	// Reverse the records slice to get the latest data first
+	for i, j := 0, len(records)-1; i < j; i, j = i+1, j-1 {
+		records[i], records[j] = records[j], records[i]
+	}
 	for _, rec := range records {
 		var crawlResp model.CrawlResponse
 		if err := json.Unmarshal(rec.ObjectInfo, &crawlResp); err != nil {
@@ -44,7 +48,6 @@ func (v *CrawlerService) GetAllUrls(ctx *gin.Context) {
 				"status":            crawlResp.Status,
 			})
 		}
-
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"urls": urls})

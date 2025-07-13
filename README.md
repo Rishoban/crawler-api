@@ -35,6 +35,7 @@ This is rest api for crawler project
 - The backend will wait for the database to be ready before starting.
 - Update `conf/config.yml` if you change database credentials or ports.
 - For frontend development, ensure CORS is configured for your frontend's origin in `main.go`.
+- User name: admin@skyell.com Password: 1234567
 
 ---
 Replace `<your-repo-url>` with your actual GitHub repository URL.

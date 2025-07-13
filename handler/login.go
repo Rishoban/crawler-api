@@ -68,7 +68,7 @@ func (v *CrawlerService) Login(ctx *gin.Context) {
 		"exp":     time.Now().Add(time.Hour * 24).Unix(),
 	})
 	// Use a secure secret in production!
-	secret := []byte("your_secret_key")
+	secret := []byte("sykell")
 	tokenString, err := token.SignedString(secret)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})

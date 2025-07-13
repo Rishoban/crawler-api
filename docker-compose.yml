@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.4
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: crawlerdb
+      MYSQL_USER: crawleruser
+      MYSQL_PASSWORD: crawlerpass
+    ports:
+      - "13306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
+
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 13306
+      DB_USER: crawleruser
+      DB_PASSWORD: crawlerpass
+      DB_NAME: crawlerdb
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data:

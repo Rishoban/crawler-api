@@ -1,7 +1,7 @@
 database:
-  host: 127.0.0.1
+  host: db
   port: 3306
-  user: root
-  name: crawler_db
-  password: password
+  user: crawleruser
+  name: crawlerdb
+  password: crawlerpass
   type: mysql

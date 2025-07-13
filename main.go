@@ -63,7 +63,15 @@ func InitStandaloneService(router *gin.Engine) error {
 
 func main() {
 	router := gin.Default()
-	router.Use(cors.Default())
+
+	// Set up CORS to allow requests from localhost:5173
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Authorization", "Content-Type"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 
 	// Initialize the standalone service
 	if err := InitStandaloneService(router); err != nil {

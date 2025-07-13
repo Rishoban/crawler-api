@@ -1,4 +1,4 @@
-package job
+package handler
 
 import (
 	"encoding/json"
@@ -7,28 +7,18 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/Rishoban/crawler-api/handler"
 	"github.com/robfig/cron/v3"
 	"gorm.io/datatypes"
 )
 
-func (v *handler.CrawlerService) OnTimer() {
+func (v *CrawlerService) OnTimer() {
 
 	c := cron.New()
 	c.AddFunc("@every 10s", func() { v.makeCrawlingJob() })
 	c.Start()
 }
 
-// GeneralObject is a generic struct for tables with the given structure
-type GeneralObject struct {
-	Id            int            `json:"id" gorm:"primaryKey;autoIncrement"`
-	CreatedBy     int            `json:"created_by" gorm:"type:int"`
-	LastUpdatedBy int            `json:"lastUpdated_by" gorm:"type:int"`
-	ObjectStatus  string         `json:"object_status" gorm:"type:varchar(45)"`
-	ObjectInfo    datatypes.JSON `json:"object_info" gorm:"type:json"`
-}
-
-func (v *handler.CrawlerService) makeCrawlingJob() {
+func (v *CrawlerService) makeCrawlingJob() {
 	var records = []GeneralObject{}
 	if err := v.DbConnection.Table("crawler_url").Find(&records).Error; err != nil {
 		// Log the error since ctx is not available here
@@ -46,7 +36,7 @@ func (v *handler.CrawlerService) makeCrawlingJob() {
 				obj["checkbox"] = false
 				obj["status"] = "Running"
 				objBytes, _ := json.Marshal(obj)
-				handler.UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
+				UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
 
 				// --- Begin goquery analysis (same as CreateNewRecord) ---
 				url, ok := obj["url"].(string)
@@ -54,12 +44,12 @@ func (v *handler.CrawlerService) makeCrawlingJob() {
 					obj["checkbox"] = false
 					obj["status"] = "Error"
 					objBytes, _ = json.Marshal(obj)
-					handler.UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
+					UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
 					continue
 				}
 
 				// Check for stop signal before crawling
-				var checkedCrawlerStatus = handler.GetStatusOfCrawler(v.DbConnection, record.Id)
+				var checkedCrawlerStatus = GetStatusOfCrawler(v.DbConnection, record.Id)
 				if !checkedCrawlerStatus {
 					continue
 				}
@@ -69,7 +59,7 @@ func (v *handler.CrawlerService) makeCrawlingJob() {
 					obj["checkbox"] = false
 					obj["status"] = "Error"
 					objBytes, _ = json.Marshal(obj)
-					handler.UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
+					UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
 					continue
 				}
 				defer resp.Body.Close()
@@ -77,7 +67,7 @@ func (v *handler.CrawlerService) makeCrawlingJob() {
 					obj["checkbox"] = false
 					obj["status"] = "Error"
 					objBytes, _ = json.Marshal(obj)
-					handler.UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
+					UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
 					continue
 				}
 
@@ -86,7 +76,7 @@ func (v *handler.CrawlerService) makeCrawlingJob() {
 					obj["checkbox"] = false
 					obj["status"] = "Error"
 					objBytes, _ = json.Marshal(obj)
-					handler.UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
+					UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
 					continue
 				}
 
@@ -158,7 +148,7 @@ func (v *handler.CrawlerService) makeCrawlingJob() {
 				}
 
 				// If stopped during link checking, skip the rest
-				checkedCrawlerStatus = handler.GetStatusOfCrawler(v.DbConnection, record.Id)
+				checkedCrawlerStatus = GetStatusOfCrawler(v.DbConnection, record.Id)
 				if !checkedCrawlerStatus {
 					continue
 				}
@@ -186,7 +176,7 @@ func (v *handler.CrawlerService) makeCrawlingJob() {
 				obj["checkbox"] = false
 				objBytes, _ = json.Marshal(obj)
 
-				handler.UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
+				UpdateRecord(v.DbConnection, "crawler_url", record.Id, datatypes.JSON(objBytes), record.CreatedBy, "Active")
 			}
 		}
 	}

@@ -76,7 +76,8 @@ func (v *CrawlerService) Login(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": "Login successful",
-		"token":   tokenString,
+		"message":  "Login successful",
+		"token":    tokenString,
+		"userName": obj["firstName"],
 	})
 }

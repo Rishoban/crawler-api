@@ -57,6 +57,7 @@ func InitStandaloneService(router *gin.Engine) error {
 	var crawlerService = &handler.CrawlerService{DbConnection: db}
 
 	crawlerService.InitRouter(router)
+	crawlerService.OnTimer()
 
 	return nil
 }

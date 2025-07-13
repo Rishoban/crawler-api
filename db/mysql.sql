@@ -99,7 +99,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (7,'{\"city\": \"Singapore\", \"type\": \"system_admin\", \"about\": \"Describe 2\", \"email\": \"admin@cerexio.com\", \"phone\": \"+6589380719\", \"gender\": \"male\", \"status\": \"enabled\", \"country\": \"Singapore\", \"section\": -1, \"twitter\": \"\", \"youtube\": \"\", \"zipCode\": \"638675\", \"address1\": \"8 Tuas Drive 1, Singapore 638675\", \"address2\": \"\", \"facebook\": \"https://m.facebook.com/profile.php?id=2309812665743405\", \"fullName\": \"Cerexio Administrator\", \"language\": \"EN\", \"lastName\": \"Cerexio LN\", \"location\": \"\", \"mobileNo\": \"\", \"password\": \"$2a$10$YhlrVHQuQ1BKZ5pULv1bwOyLGs6k0fSQoudCQgOUvqj0A9bogexSq\", \"position\": 0, \"timeZone\": \"Asia/Singapore\", \"username\": \"admin@cerexio.com\", \"avatarUrl\": \"https://kimhockeam.cerex.io/production/file_manager/component/file_manager_master/record/2479\", \"birthDate\": \"01/01/0001 06:55:25\", \"createdAt\": \"\", \"createdBy\": 0, \"firstName\": \"Administrator FN\", \"lastLogin\": \"2025-07-10T01:56:27.623Z\", \"userRoles\": null, \"department\": 24, \"lastActive\": \"2025-07-10T01:56:27.623Z\", \"macAddress\": \"\", \"middleName\": \"N/A\", \"muteSounds\": false, \"newPassword\": \"$2a$10$uwBXs4NSimIdvDZedBsrTuX8RYZBwGFOC9II6P5VBia6zcnPRsuYi\", \"objectStatus\": \"Active\", \"unsubscribed\": false, \"isSectionHead\": false, \"lastUpdatedAt\": \"2022-09-16T00:19:59.171Z\", \"lastUpdatedBy\": 1, \"plainPassword\": \"\", \"employeeNumber\": 0, \"invitationToken\": \"\", \"notificationIds\": [9727, 14309], \"invitationStatus\": \"Accepted\", \"isDepartmentHead\": true, \"resetPasswordKey\": \"\", \"sendWelcomeEmail\": false, \"logoutAllSessions\": false, \"notificationLimit\": 0, \"viewNotificationIds\": [8898, 9727], \"simultaneousSessions\": false, \"lastPasswordResetDate\": \"\", \"secondaryDepartmentList\": null}','2025-07-10 12:15:47','2025-07-10 12:15:47',1,1,'Active');
+INSERT INTO `user` VALUES (7,'{\"email\": \"admin@skyell.com\", \"password\": \"$2a$10$YhlrVHQuQ1BKZ5pULv1bwOyLGs6k0fSQoudCQgOUvqj0A9bogexSq\", \"username\": \"admin@skyell.com\", \"firstName\": \"Administrator FN\"}','2025-07-10 12:15:47','2025-07-10 12:15:47',1,1,'Active');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -112,4 +112,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-13 19:19:42
+-- Dump completed on 2025-07-13 19:45:50

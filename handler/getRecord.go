@@ -44,6 +44,7 @@ func (v *CrawlerService) GetRecordByID(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
+		"title": obj["url"],
 		"chartData": gin.H{
 			"internal": int(internal),
 			"external": int(external),
